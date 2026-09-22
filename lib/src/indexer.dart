@@ -31,9 +31,10 @@ Future<Index> indexPackage(
       .map((package) => p.normalize(package.packageUriRoot.toFilePath()))
       .toList();
 
-  final nestedPackages = (await pubspecPathsFor(
-    root,
-  )).map((path) => p.dirname(path)).where((path) => path != root).toList();
+  final nestedPackages = (await pubspecPathsFor(root))
+      .map((path) => p.dirname(path))
+      .where((path) => path != root)
+      .toList();
 
   if (Flags.instance.verbose) print('Ignoring subdirectories: $nestedPackages');
 

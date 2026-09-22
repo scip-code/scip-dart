@@ -1,10 +1,6 @@
 import 'dart:math' as math;
 
-enum AnimalType {
-  cat,
-  dog,
-  bird,
-}
+enum AnimalType { cat, dog, bird }
 
 typedef SoundMaker = void Function();
 
@@ -72,9 +68,9 @@ void main() {
   print(dog);
   print('The sum of $numbers is $sum');
 
-  print(math.Rectangle(1,2,3,4));
+  print(math.Rectangle(1, 2, 3, 4));
 
-  [1,2].reduce((a, b) => a + b);
+  [1, 2].reduce((a, b) => a + b);
 }
 
 void test(String Function(int) p) {}

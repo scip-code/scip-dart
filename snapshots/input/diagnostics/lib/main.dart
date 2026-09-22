@@ -10,7 +10,7 @@ final _unusedTopLevelVariable = 'asdf';
 void deprecatedMethod() {}
 
 void deprecatedParam({
-  @Deprecated('this param is deprecated') dynamic foobar
+  @Deprecated('this param is deprecated') dynamic foobar,
 }) {}
 
 void main() {
@@ -19,7 +19,8 @@ void main() {
   final variableWithUnnecessaryDeclaration = 'asdf';
 
   // dead_code example
-  if (true) { } else {
+  if (true) {
+  } else {
     print('This condition is never met!');
   }
 

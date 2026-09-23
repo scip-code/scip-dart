@@ -17,14 +17,14 @@
 //      > The declaration '_unusedTopLevelVariable' isn't referenced.
   
   @Deprecated('This method is deprecated')
-// ^^^^^^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`annotations.dart`/Deprecated#
+// ^^^^^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`annotations.dart`/Deprecated#
   void deprecatedMethod() {}
 //     ^^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().
   
   void deprecatedParam({
 //     ^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().
-    @Deprecated('this param is deprecated') dynamic foobar
-//   ^^^^^^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`annotations.dart`/Deprecated#
+    @Deprecated('this param is deprecated') dynamic foobar,
+//   ^^^^^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`annotations.dart`/Deprecated#
 //                                                  ^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)
   }) {}
   
@@ -41,9 +41,10 @@
 //        > The value of the local variable 'variableWithUnnecessaryDeclaration' isn't used.
   
     // dead_code example
-    if (true) { } else {
+    if (true) {
+    } else {
       print('This condition is never met!');
-//    ^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`print.dart`/print().
+//    ^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`print.dart`/print().
     }
   
     deprecatedMethod();
@@ -62,6 +63,7 @@
   }
   
   @deprecated
-// ^^^^^^^^^^ reference scip-dart pub dart:core 3.12.0 dart:core/`annotations.dart`/deprecated.
+// ^^^^^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`annotations.dart`/deprecated.
   void someDeprecatedFunc() {}
 //     ^^^^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/someDeprecatedFunc().
+  

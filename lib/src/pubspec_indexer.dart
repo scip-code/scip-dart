@@ -108,8 +108,7 @@ SymbolInformation _buildSymbol(String depName, PubspecLock lock) {
   return SymbolInformation(
     displayName: depName,
     symbol: symbol,
-    kind: SymbolInformation_Kind
-        .UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency and SymbolInformation_Kind.DevDependency
+    kind: SymbolInformation_Kind.UnspecifiedKind, // TODO: Add SymbolInformation_Kind.Dependency and SymbolInformation_Kind.DevDependency
     signatureDocumentation: Document(
       language: Language.YAML.name,
       text: ['name: $depName', 'version: $depVersion'].join('\n'),

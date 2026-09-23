@@ -5,12 +5,7 @@ class Foo {
   bool value;
   String value2;
   double? value3;
-  Foo(
-    this._far, {
-    required this.value,
-    required this.value2,
-    this.value3,
-  }) {
+  Foo(this._far, {required this.value, required this.value2, this.value3}) {
     print(_far);
   }
 }
@@ -26,9 +21,7 @@ class Bar {
 }
 
 void main() {
-  more.loadLibrary().then((_) => {
-    Bar('a').someMethod.call()
-  });
+  more.loadLibrary().then((_) => {Bar('a').someMethod.call()});
 
   Foo(1, value: true, value2: 'asdf')..value = false;
 

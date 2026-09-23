@@ -39,15 +39,12 @@ String describeDate(DateTime dt) {
   return switch (dt.weekday) {
     one => 'Feeling the Monday blues?',
     7 || six => 'Enjoy the weekend!',
-    _ => 'Hang in there.'
+    _ => 'Hang in there.',
   };
 }
 
 void main() {
-  var (
-    String name,
-    int height,
-  ) = userInfo({'name': 'Michael', 'height': 180});
+  var (String name, int height) = userInfo({'name': 'Michael', 'height': 180});
   print('User $name is $height cm tall.');
 
   final json = {'name': 'Michael', 'height': 180};

@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 3.12.2
+          sdk: 3.13.4
       - run: dart pub get
 
       - parallel:
@@ -39,39 +39,38 @@ jobs:
       fail-fast: false
       matrix:
         dir:
-          - path: basic-project
-          - path: diagnostics
-          - path: dart3-features
-            sdk: 3.12.2
+          - basic-project
+          - diagnostics
+          - dart3-features
     steps:
       - uses: actions/checkout@v7
       - name: Install scip cli
         run: |
-          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.3.3/scip-linux-amd64.tar.gz"' | tar xzf - scip
+          bash -c 'curl -L "https://github.com/sourcegraph/scip/releases/download/v0.6.0/scip-linux-amd64.tar.gz"' | tar xzf - scip
           ./scip --version
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: ${{ matrix.dir.sdk != null && matrix.dir.sdk || '3.12.2' }}
+          sdk: 3.13.4
       - name: pub get scip-dart package
         run: dart pub get
 
       - name: pub get
-        working-directory: ./snapshots/input/${{ matrix.dir.path }}
+        working-directory: ./snapshots/input/${{ matrix.dir }}
         run: dart pub get
 
       - name: Snapshots Diff Check
         run: |
-          dart run scip_dart ./snapshots/input/${{ matrix.dir.path }} --index-pubspec
-          ./scip snapshot --to ./snapshots/output/${{ matrix.dir.path }}
+          dart run scip_dart ./snapshots/input/${{ matrix.dir }} --index-pubspec
+          ./scip snapshot --to ./snapshots/output/${{ matrix.dir }}
 
-          if [[ -z "$(git status --porcelain ./snapshots/output/${{ matrix.dir.path }})" ]];
+          if [[ -z "$(git status --porcelain ./snapshots/output/${{ matrix.dir }})" ]];
           then
             echo "No changes to snapshot files"
           else
             echo
             echo "Snapshot diff detected differences, run 'make regen-snapshots' to re-generate snapshots"
-            git --no-pager diff ./snapshots/output/${{ matrix.dir.path }}
+            git --no-pager diff ./snapshots/output/${{ matrix.dir }}
             echo
             exit 1
           fi
@@ -92,7 +91,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 3.12.2
+          sdk: 3.13.4
       - run: dart pub get
 
       # Setup repo to run on

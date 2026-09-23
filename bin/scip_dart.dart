@@ -17,8 +17,7 @@ Future<void> main(List<String> args) async {
               'output',
               abbr: 'o',
               defaultsTo: 'index.scip',
-              help:
-                  'The output file to write the index to. Use "-" to write to stdout',
+              help: 'The output file to write the index to. Use "-" to write to stdout',
             )
             ..addFlag(
               'index-pubspec',
@@ -29,8 +28,7 @@ Future<void> main(List<String> args) async {
               'performance',
               aliases: ['perf'],
               defaultsTo: false,
-              help:
-                  'Whether or not to output performance metrics during indexing',
+              help: 'Whether or not to output performance metrics during indexing',
             )
             ..addFlag(
               'verbose',

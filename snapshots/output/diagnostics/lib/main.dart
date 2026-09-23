@@ -19,17 +19,17 @@
   @Deprecated('This method is deprecated')
 // ^^^^^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`annotations.dart`/Deprecated#
   void deprecatedMethod() {}
-//     ^^^^^^^^^^^^^^^^ definition scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/deprecatedMethod().
+//     ^^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().
   
   void deprecatedParam({
-//     ^^^^^^^^^^^^^^^ definition scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/deprecatedParam().
+//     ^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().
     @Deprecated('this param is deprecated') dynamic foobar,
 //   ^^^^^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`annotations.dart`/Deprecated#
-//                                                  ^^^^^^ definition scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/deprecatedParam().(foobar)
+//                                                  ^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)
   }) {}
   
   void main() {
-//     ^^^^ definition scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/main().
+//     ^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/main().
     final unusedVariable = 'asdf';
 //        ^^^^^^^^^^^^^^ definition local 3
 //        diagnostic Warning:
@@ -48,16 +48,16 @@
     }
   
     deprecatedMethod();
-//  ^^^^^^^^^^^^^^^^ reference scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/deprecatedMethod().
+//  ^^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().
 //  diagnostic Information:
 //  > 'deprecatedMethod' is deprecated and shouldn't be used. This method is deprecated.
     deprecatedParam(foobar: 2);
-//  ^^^^^^^^^^^^^^^ reference scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/deprecatedParam().
-//                  ^^^^^^ reference scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/deprecatedParam().(foobar)
+//  ^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().
+//                  ^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)
 //                  diagnostic Information:
 //                  > 'foobar' is deprecated and shouldn't be used. this param is deprecated.
     someDeprecatedFunc();
-//  ^^^^^^^^^^^^^^^^^^ reference scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/someDeprecatedFunc().
+//  ^^^^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/someDeprecatedFunc().
 //  diagnostic Information:
 //  > 'someDeprecatedFunc' is deprecated and shouldn't be used.
   }
@@ -65,5 +65,5 @@
   @deprecated
 // ^^^^^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`annotations.dart`/deprecated.
   void someDeprecatedFunc() {}
-//     ^^^^^^^^^^^^^^^^^^ definition scip-dart pub scip_dart 1.6.2 snapshots/input/diagnostics/lib/`main.dart`/someDeprecatedFunc().
+//     ^^^^^^^^^^^^^^^^^^ definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/someDeprecatedFunc().
   

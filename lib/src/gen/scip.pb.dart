@@ -42,35 +42,26 @@ class Index extends $pb.GeneratedMessage {
     return $result;
   }
   Index._() : super();
-  factory Index.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Index.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Index.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Index.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Index',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
-    ..aOM<Metadata>(1, _omitFieldNames ? '' : 'metadata',
-        subBuilder: Metadata.create)
-    ..pc<Document>(2, _omitFieldNames ? '' : 'documents', $pb.PbFieldType.PM,
-        subBuilder: Document.create)
-    ..pc<SymbolInformation>(
-        3, _omitFieldNames ? '' : 'externalSymbols', $pb.PbFieldType.PM,
-        subBuilder: SymbolInformation.create)
-    ..hasRequiredFields = false;
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Index', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
+    ..aOM<Metadata>(1, _omitFieldNames ? '' : 'metadata', subBuilder: Metadata.create)
+    ..pc<Document>(2, _omitFieldNames ? '' : 'documents', $pb.PbFieldType.PM, subBuilder: Document.create)
+    ..pc<SymbolInformation>(3, _omitFieldNames ? '' : 'externalSymbols', $pb.PbFieldType.PM, subBuilder: SymbolInformation.create)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Index clone() => Index()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Index copyWith(void Function(Index) updates) =>
-      super.copyWith((message) => updates(message as Index)) as Index;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Index copyWith(void Function(Index) updates) => super.copyWith((message) => updates(message as Index)) as Index;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -79,18 +70,14 @@ class Index extends $pb.GeneratedMessage {
   Index createEmptyInstance() => create();
   static $pb.PbList<Index> createRepeated() => $pb.PbList<Index>();
   @$core.pragma('dart2js:noInline')
-  static Index getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Index>(create);
+  static Index getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Index>(create);
   static Index? _defaultInstance;
 
   /// Metadata about this index.
   @$pb.TagNumber(1)
   Metadata get metadata => $_getN(0);
   @$pb.TagNumber(1)
-  set metadata(Metadata v) {
-    setField(1, v);
-  }
-
+  set metadata(Metadata v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasMetadata() => $_has(0);
   @$pb.TagNumber(1)
@@ -134,41 +121,27 @@ class Metadata extends $pb.GeneratedMessage {
     return $result;
   }
   Metadata._() : super();
-  factory Metadata.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Metadata.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Metadata.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Metadata.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Metadata',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
-    ..e<ProtocolVersion>(
-        1, _omitFieldNames ? '' : 'version', $pb.PbFieldType.OE,
-        defaultOrMaker: ProtocolVersion.UnspecifiedProtocolVersion,
-        valueOf: ProtocolVersion.valueOf,
-        enumValues: ProtocolVersion.values)
-    ..aOM<ToolInfo>(2, _omitFieldNames ? '' : 'toolInfo',
-        subBuilder: ToolInfo.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Metadata', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
+    ..e<ProtocolVersion>(1, _omitFieldNames ? '' : 'version', $pb.PbFieldType.OE, defaultOrMaker: ProtocolVersion.UnspecifiedProtocolVersion, valueOf: ProtocolVersion.valueOf, enumValues: ProtocolVersion.values)
+    ..aOM<ToolInfo>(2, _omitFieldNames ? '' : 'toolInfo', subBuilder: ToolInfo.create)
     ..aOS(3, _omitFieldNames ? '' : 'projectRoot')
-    ..e<TextEncoding>(
-        4, _omitFieldNames ? '' : 'textDocumentEncoding', $pb.PbFieldType.OE,
-        defaultOrMaker: TextEncoding.UnspecifiedTextEncoding,
-        valueOf: TextEncoding.valueOf,
-        enumValues: TextEncoding.values)
-    ..hasRequiredFields = false;
+    ..e<TextEncoding>(4, _omitFieldNames ? '' : 'textDocumentEncoding', $pb.PbFieldType.OE, defaultOrMaker: TextEncoding.UnspecifiedTextEncoding, valueOf: TextEncoding.valueOf, enumValues: TextEncoding.values)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Metadata clone() => Metadata()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Metadata copyWith(void Function(Metadata) updates) =>
-      super.copyWith((message) => updates(message as Metadata)) as Metadata;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Metadata copyWith(void Function(Metadata) updates) => super.copyWith((message) => updates(message as Metadata)) as Metadata;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -177,18 +150,14 @@ class Metadata extends $pb.GeneratedMessage {
   Metadata createEmptyInstance() => create();
   static $pb.PbList<Metadata> createRepeated() => $pb.PbList<Metadata>();
   @$core.pragma('dart2js:noInline')
-  static Metadata getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Metadata>(create);
+  static Metadata getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Metadata>(create);
   static Metadata? _defaultInstance;
 
   /// Which version of this protocol was used to generate this index?
   @$pb.TagNumber(1)
   ProtocolVersion get version => $_getN(0);
   @$pb.TagNumber(1)
-  set version(ProtocolVersion v) {
-    setField(1, v);
-  }
-
+  set version(ProtocolVersion v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasVersion() => $_has(0);
   @$pb.TagNumber(1)
@@ -198,10 +167,7 @@ class Metadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   ToolInfo get toolInfo => $_getN(1);
   @$pb.TagNumber(2)
-  set toolInfo(ToolInfo v) {
-    setField(2, v);
-  }
-
+  set toolInfo(ToolInfo v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasToolInfo() => $_has(1);
   @$pb.TagNumber(2)
@@ -215,10 +181,7 @@ class Metadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get projectRoot => $_getSZ(2);
   @$pb.TagNumber(3)
-  set projectRoot($core.String v) {
-    $_setString(2, v);
-  }
-
+  set projectRoot($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasProjectRoot() => $_has(2);
   @$pb.TagNumber(3)
@@ -230,10 +193,7 @@ class Metadata extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   TextEncoding get textDocumentEncoding => $_getN(3);
   @$pb.TagNumber(4)
-  set textDocumentEncoding(TextEncoding v) {
-    setField(4, v);
-  }
-
+  set textDocumentEncoding(TextEncoding v) { setField(4, v); }
   @$pb.TagNumber(4)
   $core.bool hasTextDocumentEncoding() => $_has(3);
   @$pb.TagNumber(4)
@@ -259,31 +219,26 @@ class ToolInfo extends $pb.GeneratedMessage {
     return $result;
   }
   ToolInfo._() : super();
-  factory ToolInfo.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory ToolInfo.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory ToolInfo.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ToolInfo.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'ToolInfo',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ToolInfo', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'version')
     ..pPS(3, _omitFieldNames ? '' : 'arguments')
-    ..hasRequiredFields = false;
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   ToolInfo clone() => ToolInfo()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  ToolInfo copyWith(void Function(ToolInfo) updates) =>
-      super.copyWith((message) => updates(message as ToolInfo)) as ToolInfo;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ToolInfo copyWith(void Function(ToolInfo) updates) => super.copyWith((message) => updates(message as ToolInfo)) as ToolInfo;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -292,18 +247,14 @@ class ToolInfo extends $pb.GeneratedMessage {
   ToolInfo createEmptyInstance() => create();
   static $pb.PbList<ToolInfo> createRepeated() => $pb.PbList<ToolInfo>();
   @$core.pragma('dart2js:noInline')
-  static ToolInfo getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ToolInfo>(create);
+  static ToolInfo getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ToolInfo>(create);
   static ToolInfo? _defaultInstance;
 
   /// Name of the indexer that produced this index.
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -313,10 +264,7 @@ class ToolInfo extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get version => $_getSZ(1);
   @$pb.TagNumber(2)
-  set version($core.String v) {
-    $_setString(1, v);
-  }
-
+  set version($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasVersion() => $_has(1);
   @$pb.TagNumber(2)
@@ -359,42 +307,29 @@ class Document extends $pb.GeneratedMessage {
     return $result;
   }
   Document._() : super();
-  factory Document.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Document.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Document.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Document.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Document',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Document', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'relativePath')
-    ..pc<Occurrence>(
-        2, _omitFieldNames ? '' : 'occurrences', $pb.PbFieldType.PM,
-        subBuilder: Occurrence.create)
-    ..pc<SymbolInformation>(
-        3, _omitFieldNames ? '' : 'symbols', $pb.PbFieldType.PM,
-        subBuilder: SymbolInformation.create)
+    ..pc<Occurrence>(2, _omitFieldNames ? '' : 'occurrences', $pb.PbFieldType.PM, subBuilder: Occurrence.create)
+    ..pc<SymbolInformation>(3, _omitFieldNames ? '' : 'symbols', $pb.PbFieldType.PM, subBuilder: SymbolInformation.create)
     ..aOS(4, _omitFieldNames ? '' : 'language')
     ..aOS(5, _omitFieldNames ? '' : 'text')
-    ..e<PositionEncoding>(
-        6, _omitFieldNames ? '' : 'positionEncoding', $pb.PbFieldType.OE,
-        defaultOrMaker: PositionEncoding.UnspecifiedPositionEncoding,
-        valueOf: PositionEncoding.valueOf,
-        enumValues: PositionEncoding.values)
-    ..hasRequiredFields = false;
+    ..e<PositionEncoding>(6, _omitFieldNames ? '' : 'positionEncoding', $pb.PbFieldType.OE, defaultOrMaker: PositionEncoding.UnspecifiedPositionEncoding, valueOf: PositionEncoding.valueOf, enumValues: PositionEncoding.values)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Document clone() => Document()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Document copyWith(void Function(Document) updates) =>
-      super.copyWith((message) => updates(message as Document)) as Document;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Document copyWith(void Function(Document) updates) => super.copyWith((message) => updates(message as Document)) as Document;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -403,8 +338,7 @@ class Document extends $pb.GeneratedMessage {
   Document createEmptyInstance() => create();
   static $pb.PbList<Document> createRepeated() => $pb.PbList<Document>();
   @$core.pragma('dart2js:noInline')
-  static Document getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Document>(create);
+  static Document getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Document>(create);
   static Document? _defaultInstance;
 
   ///  (Required) Unique path to the text document.
@@ -419,10 +353,7 @@ class Document extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get relativePath => $_getSZ(0);
   @$pb.TagNumber(1)
-  set relativePath($core.String v) {
-    $_setString(0, v);
-  }
-
+  set relativePath($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasRelativePath() => $_has(0);
   @$pb.TagNumber(1)
@@ -447,10 +378,7 @@ class Document extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get language => $_getSZ(3);
   @$pb.TagNumber(4)
-  set language($core.String v) {
-    $_setString(3, v);
-  }
-
+  set language($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasLanguage() => $_has(3);
   @$pb.TagNumber(4)
@@ -466,10 +394,7 @@ class Document extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.String get text => $_getSZ(4);
   @$pb.TagNumber(5)
-  set text($core.String v) {
-    $_setString(4, v);
-  }
-
+  set text($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasText() => $_has(4);
   @$pb.TagNumber(5)
@@ -488,10 +413,7 @@ class Document extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   PositionEncoding get positionEncoding => $_getN(5);
   @$pb.TagNumber(6)
-  set positionEncoding(PositionEncoding v) {
-    setField(6, v);
-  }
-
+  set positionEncoding(PositionEncoding v) { setField(6, v); }
   @$pb.TagNumber(6)
   $core.bool hasPositionEncoding() => $_has(5);
   @$pb.TagNumber(6)
@@ -559,34 +481,26 @@ class Symbol extends $pb.GeneratedMessage {
     return $result;
   }
   Symbol._() : super();
-  factory Symbol.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Symbol.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Symbol.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Symbol.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Symbol',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Symbol', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'scheme')
-    ..aOM<Package>(2, _omitFieldNames ? '' : 'package',
-        subBuilder: Package.create)
-    ..pc<Descriptor>(
-        3, _omitFieldNames ? '' : 'descriptors', $pb.PbFieldType.PM,
-        subBuilder: Descriptor.create)
-    ..hasRequiredFields = false;
+    ..aOM<Package>(2, _omitFieldNames ? '' : 'package', subBuilder: Package.create)
+    ..pc<Descriptor>(3, _omitFieldNames ? '' : 'descriptors', $pb.PbFieldType.PM, subBuilder: Descriptor.create)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Symbol clone() => Symbol()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Symbol copyWith(void Function(Symbol) updates) =>
-      super.copyWith((message) => updates(message as Symbol)) as Symbol;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Symbol copyWith(void Function(Symbol) updates) => super.copyWith((message) => updates(message as Symbol)) as Symbol;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -595,17 +509,13 @@ class Symbol extends $pb.GeneratedMessage {
   Symbol createEmptyInstance() => create();
   static $pb.PbList<Symbol> createRepeated() => $pb.PbList<Symbol>();
   @$core.pragma('dart2js:noInline')
-  static Symbol getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Symbol>(create);
+  static Symbol getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Symbol>(create);
   static Symbol? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get scheme => $_getSZ(0);
   @$pb.TagNumber(1)
-  set scheme($core.String v) {
-    $_setString(0, v);
-  }
-
+  set scheme($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasScheme() => $_has(0);
   @$pb.TagNumber(1)
@@ -614,10 +524,7 @@ class Symbol extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   Package get package => $_getN(1);
   @$pb.TagNumber(2)
-  set package(Package v) {
-    setField(2, v);
-  }
-
+  set package(Package v) { setField(2, v); }
   @$pb.TagNumber(2)
   $core.bool hasPackage() => $_has(1);
   @$pb.TagNumber(2)
@@ -651,31 +558,26 @@ class Package extends $pb.GeneratedMessage {
     return $result;
   }
   Package._() : super();
-  factory Package.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Package.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Package.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Package.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Package',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Package', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'manager')
     ..aOS(2, _omitFieldNames ? '' : 'name')
     ..aOS(3, _omitFieldNames ? '' : 'version')
-    ..hasRequiredFields = false;
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Package clone() => Package()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Package copyWith(void Function(Package) updates) =>
-      super.copyWith((message) => updates(message as Package)) as Package;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Package copyWith(void Function(Package) updates) => super.copyWith((message) => updates(message as Package)) as Package;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -684,17 +586,13 @@ class Package extends $pb.GeneratedMessage {
   Package createEmptyInstance() => create();
   static $pb.PbList<Package> createRepeated() => $pb.PbList<Package>();
   @$core.pragma('dart2js:noInline')
-  static Package getDefault() =>
-      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Package>(create);
+  static Package getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Package>(create);
   static Package? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get manager => $_getSZ(0);
   @$pb.TagNumber(1)
-  set manager($core.String v) {
-    $_setString(0, v);
-  }
-
+  set manager($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasManager() => $_has(0);
   @$pb.TagNumber(1)
@@ -703,10 +601,7 @@ class Package extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get name => $_getSZ(1);
   @$pb.TagNumber(2)
-  set name($core.String v) {
-    $_setString(1, v);
-  }
-
+  set name($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasName() => $_has(1);
   @$pb.TagNumber(2)
@@ -715,10 +610,7 @@ class Package extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get version => $_getSZ(2);
   @$pb.TagNumber(3)
-  set version($core.String v) {
-    $_setString(2, v);
-  }
-
+  set version($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasVersion() => $_has(2);
   @$pb.TagNumber(3)
@@ -744,35 +636,26 @@ class Descriptor extends $pb.GeneratedMessage {
     return $result;
   }
   Descriptor._() : super();
-  factory Descriptor.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Descriptor.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Descriptor.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Descriptor.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Descriptor',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Descriptor', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'name')
     ..aOS(2, _omitFieldNames ? '' : 'disambiguator')
-    ..e<Descriptor_Suffix>(
-        3, _omitFieldNames ? '' : 'suffix', $pb.PbFieldType.OE,
-        defaultOrMaker: Descriptor_Suffix.UnspecifiedSuffix,
-        valueOf: Descriptor_Suffix.valueOf,
-        enumValues: Descriptor_Suffix.values)
-    ..hasRequiredFields = false;
+    ..e<Descriptor_Suffix>(3, _omitFieldNames ? '' : 'suffix', $pb.PbFieldType.OE, defaultOrMaker: Descriptor_Suffix.UnspecifiedSuffix, valueOf: Descriptor_Suffix.valueOf, enumValues: Descriptor_Suffix.values)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Descriptor clone() => Descriptor()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Descriptor copyWith(void Function(Descriptor) updates) =>
-      super.copyWith((message) => updates(message as Descriptor)) as Descriptor;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Descriptor copyWith(void Function(Descriptor) updates) => super.copyWith((message) => updates(message as Descriptor)) as Descriptor;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -781,17 +664,13 @@ class Descriptor extends $pb.GeneratedMessage {
   Descriptor createEmptyInstance() => create();
   static $pb.PbList<Descriptor> createRepeated() => $pb.PbList<Descriptor>();
   @$core.pragma('dart2js:noInline')
-  static Descriptor getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Descriptor>(create);
+  static Descriptor getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Descriptor>(create);
   static Descriptor? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get name => $_getSZ(0);
   @$pb.TagNumber(1)
-  set name($core.String v) {
-    $_setString(0, v);
-  }
-
+  set name($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasName() => $_has(0);
   @$pb.TagNumber(1)
@@ -800,10 +679,7 @@ class Descriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get disambiguator => $_getSZ(1);
   @$pb.TagNumber(2)
-  set disambiguator($core.String v) {
-    $_setString(1, v);
-  }
-
+  set disambiguator($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasDisambiguator() => $_has(1);
   @$pb.TagNumber(2)
@@ -812,10 +688,7 @@ class Descriptor extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   Descriptor_Suffix get suffix => $_getN(2);
   @$pb.TagNumber(3)
-  set suffix(Descriptor_Suffix v) {
-    setField(3, v);
-  }
-
+  set suffix(Descriptor_Suffix v) { setField(3, v); }
   @$pb.TagNumber(3)
   $core.bool hasSuffix() => $_has(2);
   @$pb.TagNumber(3)
@@ -859,54 +732,39 @@ class SymbolInformation extends $pb.GeneratedMessage {
     return $result;
   }
   SymbolInformation._() : super();
-  factory SymbolInformation.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory SymbolInformation.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory SymbolInformation.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SymbolInformation.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'SymbolInformation',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SymbolInformation', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'symbol')
     ..pPS(3, _omitFieldNames ? '' : 'documentation')
-    ..pc<Relationship>(
-        4, _omitFieldNames ? '' : 'relationships', $pb.PbFieldType.PM,
-        subBuilder: Relationship.create)
-    ..e<SymbolInformation_Kind>(
-        5, _omitFieldNames ? '' : 'kind', $pb.PbFieldType.OE,
-        defaultOrMaker: SymbolInformation_Kind.UnspecifiedKind,
-        valueOf: SymbolInformation_Kind.valueOf,
-        enumValues: SymbolInformation_Kind.values)
+    ..pc<Relationship>(4, _omitFieldNames ? '' : 'relationships', $pb.PbFieldType.PM, subBuilder: Relationship.create)
+    ..e<SymbolInformation_Kind>(5, _omitFieldNames ? '' : 'kind', $pb.PbFieldType.OE, defaultOrMaker: SymbolInformation_Kind.UnspecifiedKind, valueOf: SymbolInformation_Kind.valueOf, enumValues: SymbolInformation_Kind.values)
     ..aOS(6, _omitFieldNames ? '' : 'displayName')
-    ..aOM<Document>(7, _omitFieldNames ? '' : 'signatureDocumentation',
-        subBuilder: Document.create)
+    ..aOM<Document>(7, _omitFieldNames ? '' : 'signatureDocumentation', subBuilder: Document.create)
     ..aOS(8, _omitFieldNames ? '' : 'enclosingSymbol')
-    ..hasRequiredFields = false;
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   SymbolInformation clone() => SymbolInformation()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  SymbolInformation copyWith(void Function(SymbolInformation) updates) =>
-      super.copyWith((message) => updates(message as SymbolInformation))
-          as SymbolInformation;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SymbolInformation copyWith(void Function(SymbolInformation) updates) => super.copyWith((message) => updates(message as SymbolInformation)) as SymbolInformation;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static SymbolInformation create() => SymbolInformation._();
   SymbolInformation createEmptyInstance() => create();
-  static $pb.PbList<SymbolInformation> createRepeated() =>
-      $pb.PbList<SymbolInformation>();
+  static $pb.PbList<SymbolInformation> createRepeated() => $pb.PbList<SymbolInformation>();
   @$core.pragma('dart2js:noInline')
-  static SymbolInformation getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<SymbolInformation>(create);
+  static SymbolInformation getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SymbolInformation>(create);
   static SymbolInformation? _defaultInstance;
 
   /// Identifier of this symbol, which can be referenced from `Occurence.symbol`.
@@ -914,10 +772,7 @@ class SymbolInformation extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   $core.String get symbol => $_getSZ(0);
   @$pb.TagNumber(1)
-  set symbol($core.String v) {
-    $_setString(0, v);
-  }
-
+  set symbol($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasSymbol() => $_has(0);
   @$pb.TagNumber(1)
@@ -942,10 +797,7 @@ class SymbolInformation extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   SymbolInformation_Kind get kind => $_getN(3);
   @$pb.TagNumber(5)
-  set kind(SymbolInformation_Kind v) {
-    setField(5, v);
-  }
-
+  set kind(SymbolInformation_Kind v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasKind() => $_has(3);
   @$pb.TagNumber(5)
@@ -963,10 +815,7 @@ class SymbolInformation extends $pb.GeneratedMessage {
   @$pb.TagNumber(6)
   $core.String get displayName => $_getSZ(4);
   @$pb.TagNumber(6)
-  set displayName($core.String v) {
-    $_setString(4, v);
-  }
-
+  set displayName($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(6)
   $core.bool hasDisplayName() => $_has(4);
   @$pb.TagNumber(6)
@@ -981,10 +830,7 @@ class SymbolInformation extends $pb.GeneratedMessage {
   @$pb.TagNumber(7)
   Document get signatureDocumentation => $_getN(5);
   @$pb.TagNumber(7)
-  set signatureDocumentation(Document v) {
-    setField(7, v);
-  }
-
+  set signatureDocumentation(Document v) { setField(7, v); }
   @$pb.TagNumber(7)
   $core.bool hasSignatureDocumentation() => $_has(5);
   @$pb.TagNumber(7)
@@ -1012,10 +858,7 @@ class SymbolInformation extends $pb.GeneratedMessage {
   @$pb.TagNumber(8)
   $core.String get enclosingSymbol => $_getSZ(6);
   @$pb.TagNumber(8)
-  set enclosingSymbol($core.String v) {
-    $_setString(6, v);
-  }
-
+  set enclosingSymbol($core.String v) { $_setString(6, v); }
   @$pb.TagNumber(8)
   $core.bool hasEnclosingSymbol() => $_has(6);
   @$pb.TagNumber(8)
@@ -1049,54 +892,43 @@ class Relationship extends $pb.GeneratedMessage {
     return $result;
   }
   Relationship._() : super();
-  factory Relationship.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Relationship.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Relationship.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Relationship.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Relationship',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Relationship', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'symbol')
     ..aOB(2, _omitFieldNames ? '' : 'isReference')
     ..aOB(3, _omitFieldNames ? '' : 'isImplementation')
     ..aOB(4, _omitFieldNames ? '' : 'isTypeDefinition')
     ..aOB(5, _omitFieldNames ? '' : 'isDefinition')
-    ..hasRequiredFields = false;
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Relationship clone() => Relationship()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Relationship copyWith(void Function(Relationship) updates) =>
-      super.copyWith((message) => updates(message as Relationship))
-          as Relationship;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Relationship copyWith(void Function(Relationship) updates) => super.copyWith((message) => updates(message as Relationship)) as Relationship;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
   static Relationship create() => Relationship._();
   Relationship createEmptyInstance() => create();
-  static $pb.PbList<Relationship> createRepeated() =>
-      $pb.PbList<Relationship>();
+  static $pb.PbList<Relationship> createRepeated() => $pb.PbList<Relationship>();
   @$core.pragma('dart2js:noInline')
-  static Relationship getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Relationship>(create);
+  static Relationship getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Relationship>(create);
   static Relationship? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get symbol => $_getSZ(0);
   @$pb.TagNumber(1)
-  set symbol($core.String v) {
-    $_setString(0, v);
-  }
-
+  set symbol($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
   $core.bool hasSymbol() => $_has(0);
   @$pb.TagNumber(1)
@@ -1129,10 +961,7 @@ class Relationship extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.bool get isReference => $_getBF(1);
   @$pb.TagNumber(2)
-  set isReference($core.bool v) {
-    $_setBool(1, v);
-  }
-
+  set isReference($core.bool v) { $_setBool(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasIsReference() => $_has(1);
   @$pb.TagNumber(2)
@@ -1149,10 +978,7 @@ class Relationship extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.bool get isImplementation => $_getBF(2);
   @$pb.TagNumber(3)
-  set isImplementation($core.bool v) {
-    $_setBool(2, v);
-  }
-
+  set isImplementation($core.bool v) { $_setBool(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasIsImplementation() => $_has(2);
   @$pb.TagNumber(3)
@@ -1162,10 +988,7 @@ class Relationship extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.bool get isTypeDefinition => $_getBF(3);
   @$pb.TagNumber(4)
-  set isTypeDefinition($core.bool v) {
-    $_setBool(3, v);
-  }
-
+  set isTypeDefinition($core.bool v) { $_setBool(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasIsTypeDefinition() => $_has(3);
   @$pb.TagNumber(4)
@@ -1190,10 +1013,7 @@ class Relationship extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   $core.bool get isDefinition => $_getBF(4);
   @$pb.TagNumber(5)
-  set isDefinition($core.bool v) {
-    $_setBool(4, v);
-  }
-
+  set isDefinition($core.bool v) { $_setBool(4, v); }
   @$pb.TagNumber(5)
   $core.bool hasIsDefinition() => $_has(4);
   @$pb.TagNumber(5)
@@ -1240,41 +1060,30 @@ class Occurrence extends $pb.GeneratedMessage {
     return $result;
   }
   Occurrence._() : super();
-  factory Occurrence.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Occurrence.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Occurrence.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Occurrence.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Occurrence',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Occurrence', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
     ..p<$core.int>(1, _omitFieldNames ? '' : 'range', $pb.PbFieldType.K3)
     ..aOS(2, _omitFieldNames ? '' : 'symbol')
     ..a<$core.int>(3, _omitFieldNames ? '' : 'symbolRoles', $pb.PbFieldType.O3)
     ..pPS(4, _omitFieldNames ? '' : 'overrideDocumentation')
-    ..e<SyntaxKind>(5, _omitFieldNames ? '' : 'syntaxKind', $pb.PbFieldType.OE,
-        defaultOrMaker: SyntaxKind.UnspecifiedSyntaxKind,
-        valueOf: SyntaxKind.valueOf,
-        enumValues: SyntaxKind.values)
-    ..pc<Diagnostic>(
-        6, _omitFieldNames ? '' : 'diagnostics', $pb.PbFieldType.PM,
-        subBuilder: Diagnostic.create)
-    ..p<$core.int>(
-        7, _omitFieldNames ? '' : 'enclosingRange', $pb.PbFieldType.K3)
-    ..hasRequiredFields = false;
+    ..e<SyntaxKind>(5, _omitFieldNames ? '' : 'syntaxKind', $pb.PbFieldType.OE, defaultOrMaker: SyntaxKind.UnspecifiedSyntaxKind, valueOf: SyntaxKind.valueOf, enumValues: SyntaxKind.values)
+    ..pc<Diagnostic>(6, _omitFieldNames ? '' : 'diagnostics', $pb.PbFieldType.PM, subBuilder: Diagnostic.create)
+    ..p<$core.int>(7, _omitFieldNames ? '' : 'enclosingRange', $pb.PbFieldType.K3)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Occurrence clone() => Occurrence()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Occurrence copyWith(void Function(Occurrence) updates) =>
-      super.copyWith((message) => updates(message as Occurrence)) as Occurrence;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Occurrence copyWith(void Function(Occurrence) updates) => super.copyWith((message) => updates(message as Occurrence)) as Occurrence;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -1283,8 +1092,7 @@ class Occurrence extends $pb.GeneratedMessage {
   Occurrence createEmptyInstance() => create();
   static $pb.PbList<Occurrence> createRepeated() => $pb.PbList<Occurrence>();
   @$core.pragma('dart2js:noInline')
-  static Occurrence getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Occurrence>(create);
+  static Occurrence getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Occurrence>(create);
   static Occurrence? _defaultInstance;
 
   ///  Half-open [start, end) range of this occurrence. Must be exactly three or four
@@ -1318,10 +1126,7 @@ class Occurrence extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get symbol => $_getSZ(1);
   @$pb.TagNumber(2)
-  set symbol($core.String v) {
-    $_setString(1, v);
-  }
-
+  set symbol($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasSymbol() => $_has(1);
   @$pb.TagNumber(2)
@@ -1332,10 +1137,7 @@ class Occurrence extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.int get symbolRoles => $_getIZ(2);
   @$pb.TagNumber(3)
-  set symbolRoles($core.int v) {
-    $_setSignedInt32(2, v);
-  }
-
+  set symbolRoles($core.int v) { $_setSignedInt32(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasSymbolRoles() => $_has(2);
   @$pb.TagNumber(3)
@@ -1356,10 +1158,7 @@ class Occurrence extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   SyntaxKind get syntaxKind => $_getN(4);
   @$pb.TagNumber(5)
-  set syntaxKind(SyntaxKind v) {
-    setField(5, v);
-  }
-
+  set syntaxKind(SyntaxKind v) { setField(5, v); }
   @$pb.TagNumber(5)
   $core.bool hasSyntaxKind() => $_has(4);
   @$pb.TagNumber(5)
@@ -1454,39 +1253,28 @@ class Diagnostic extends $pb.GeneratedMessage {
     return $result;
   }
   Diagnostic._() : super();
-  factory Diagnostic.fromBuffer($core.List<$core.int> i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(i, r);
-  factory Diagnostic.fromJson($core.String i,
-          [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(i, r);
+  factory Diagnostic.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory Diagnostic.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'Diagnostic',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'),
-      createEmptyInstance: create)
-    ..e<Severity>(1, _omitFieldNames ? '' : 'severity', $pb.PbFieldType.OE,
-        defaultOrMaker: Severity.UnspecifiedSeverity,
-        valueOf: Severity.valueOf,
-        enumValues: Severity.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Diagnostic', package: const $pb.PackageName(_omitMessageNames ? '' : 'scip'), createEmptyInstance: create)
+    ..e<Severity>(1, _omitFieldNames ? '' : 'severity', $pb.PbFieldType.OE, defaultOrMaker: Severity.UnspecifiedSeverity, valueOf: Severity.valueOf, enumValues: Severity.values)
     ..aOS(2, _omitFieldNames ? '' : 'code')
     ..aOS(3, _omitFieldNames ? '' : 'message')
     ..aOS(4, _omitFieldNames ? '' : 'source')
-    ..pc<DiagnosticTag>(5, _omitFieldNames ? '' : 'tags', $pb.PbFieldType.KE,
-        valueOf: DiagnosticTag.valueOf,
-        enumValues: DiagnosticTag.values,
-        defaultEnumValue: DiagnosticTag.UnspecifiedDiagnosticTag)
-    ..hasRequiredFields = false;
+    ..pc<DiagnosticTag>(5, _omitFieldNames ? '' : 'tags', $pb.PbFieldType.KE, valueOf: DiagnosticTag.valueOf, enumValues: DiagnosticTag.values, defaultEnumValue: DiagnosticTag.UnspecifiedDiagnosticTag)
+    ..hasRequiredFields = false
+  ;
 
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-      'Will be removed in next major version')
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
   Diagnostic clone() => Diagnostic()..mergeFromMessage(this);
-  @$core.Deprecated('Using this can add significant overhead to your binary. '
-      'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-      'Will be removed in next major version')
-  Diagnostic copyWith(void Function(Diagnostic) updates) =>
-      super.copyWith((message) => updates(message as Diagnostic)) as Diagnostic;
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  Diagnostic copyWith(void Function(Diagnostic) updates) => super.copyWith((message) => updates(message as Diagnostic)) as Diagnostic;
 
   $pb.BuilderInfo get info_ => _i;
 
@@ -1495,18 +1283,14 @@ class Diagnostic extends $pb.GeneratedMessage {
   Diagnostic createEmptyInstance() => create();
   static $pb.PbList<Diagnostic> createRepeated() => $pb.PbList<Diagnostic>();
   @$core.pragma('dart2js:noInline')
-  static Diagnostic getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<Diagnostic>(create);
+  static Diagnostic getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Diagnostic>(create);
   static Diagnostic? _defaultInstance;
 
   /// Should this diagnostic be reported as an error, warning, info, or hint?
   @$pb.TagNumber(1)
   Severity get severity => $_getN(0);
   @$pb.TagNumber(1)
-  set severity(Severity v) {
-    setField(1, v);
-  }
-
+  set severity(Severity v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasSeverity() => $_has(0);
   @$pb.TagNumber(1)
@@ -1516,10 +1300,7 @@ class Diagnostic extends $pb.GeneratedMessage {
   @$pb.TagNumber(2)
   $core.String get code => $_getSZ(1);
   @$pb.TagNumber(2)
-  set code($core.String v) {
-    $_setString(1, v);
-  }
-
+  set code($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
   $core.bool hasCode() => $_has(1);
   @$pb.TagNumber(2)
@@ -1529,10 +1310,7 @@ class Diagnostic extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   $core.String get message => $_getSZ(2);
   @$pb.TagNumber(3)
-  set message($core.String v) {
-    $_setString(2, v);
-  }
-
+  set message($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
   $core.bool hasMessage() => $_has(2);
   @$pb.TagNumber(3)
@@ -1543,10 +1321,7 @@ class Diagnostic extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   $core.String get source => $_getSZ(3);
   @$pb.TagNumber(4)
-  set source($core.String v) {
-    $_setString(3, v);
-  }
-
+  set source($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(4)
   $core.bool hasSource() => $_has(3);
   @$pb.TagNumber(4)
@@ -1556,6 +1331,6 @@ class Diagnostic extends $pb.GeneratedMessage {
   $core.List<DiagnosticTag> get tags => $_getList(4);
 }
 
+
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
-const _omitMessageNames =
-    $core.bool.fromEnvironment('protobuf.omit_message_names');
+const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

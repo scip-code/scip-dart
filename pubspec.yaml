@@ -12,7 +12,7 @@ executables:
 dependencies:
   analyzer: ^14.0.0
   args: ^2.4.0
-  package_config: ^2.1.0
+  package_config: ^3.0.0
   path: ^1.8.3
   protobuf: ^3.1.0
   pubspec_parse: ^1.2.1

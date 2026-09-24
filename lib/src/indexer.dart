@@ -39,13 +39,8 @@ Future<Index> indexPackage(
   if (Flags.instance.verbose) print('Ignoring subdirectories: $nestedPackages');
 
   final collection = AnalysisContextCollection(
-      includedPaths: [
-        ...allPackageRoots,
-        dirPath,
-      ],
-      // only index dart files of the current dart package, to index nested
-      // packages, scip indexing can simply be re-run for that nested package
-      excludedPaths: nestedPackages);
+    includedPaths: [...allPackageRoots, dirPath],
+  );
 
   if (Flags.instance.performance) print('Analyzing Source');
   final st = Stopwatch()..start();
@@ -54,6 +49,13 @@ Future<Index> indexPackage(
   final resolvedUnitFutures = context.contextRoot
       .analyzedFiles()
       .where((file) => p.extension(file) == '.dart')
+      // only index dart files of the current dart package, to index nested
+      // packages, scip indexing can simply be re-run for that nested package
+      .where(
+        (file) => !nestedPackages.any(
+          (nested) => p.isWithin(p.normalize(p.absolute(nested)), file),
+        ),
+      )
       .map(context.currentSession.getResolvedUnit);
 
   final resolvedUnits = await Future.wait(resolvedUnitFutures);
@@ -64,15 +66,16 @@ Future<Index> indexPackage(
     print('Parsing Ast');
   }
 
-  final documents =
-      resolvedUnits.whereType<ResolvedUnitResult>().map((resUnit) {
+  final documents = resolvedUnits.whereType<ResolvedUnitResult>().map((
+    resUnit,
+  ) {
     final relativePath = p.relative(resUnit.path, from: dirPath);
 
     final visitor = ScipVisitor(
       relativePath,
       dirPath,
       resUnit.lineInfo,
-      resUnit.errors,
+      resUnit.diagnostics,
       packageConfig,
       pubspec,
     );

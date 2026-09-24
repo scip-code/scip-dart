@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/diagnostic/diagnostic.dart' as analyzer;
 import 'package:analyzer/source/line_info.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -18,7 +18,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   final String _relativePath;
   final String _projectRoot;
   final LineInfo _lineInfo;
-  final List<AnalysisError> _analysisErrors;
+  final List<analyzer.Diagnostic> _analysisErrors;
 
   final SymbolGenerator _symbolGenerator;
 
@@ -32,17 +32,16 @@ class ScipVisitor extends GeneralizingAstVisitor {
     this._analysisErrors,
     PackageConfig packageConfig,
     Pubspec pubspec,
-  ) : _symbolGenerator = SymbolGenerator(
-          packageConfig,
-          pubspec,
-        ) {
+  ) : _symbolGenerator = SymbolGenerator(packageConfig, pubspec) {
     final fileSymbol = _symbolGenerator.fileSymbolFor(_relativePath);
-    occurrences.add(Occurrence(
-      symbol: fileSymbol,
-      range: [0, 0, 0],
-      syntaxKind: SyntaxKind.IdentifierModule,
-      symbolRoles: SymbolRole.Definition.value,
-    ));
+    occurrences.add(
+      Occurrence(
+        symbol: fileSymbol,
+        range: [0, 0, 0],
+        syntaxKind: SyntaxKind.IdentifierModule,
+        symbolRoles: SymbolRole.Definition.value,
+      ),
+    );
     symbols.add(SymbolInformation(symbol: fileSymbol));
   }
 
@@ -53,10 +52,16 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // to correctly parse all [Declaration] ast nodes.
     if (node is Declaration) {
       _visitDeclaration(node);
-    } else if (node is NormalFormalParameter) {
-      _visitNormalFormalParameter(node);
+    } else if (node is FormalParameter) {
+      _visitFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is NamedType) {
+      _visitNamedType(node);
+    } else if (node is ImportPrefixReference) {
+      _visitImportPrefixReference(node);
+    } else if (node is NamedArgument) {
+      _visitNamedArgument(node);
     }
 
     super.visitNode(node);
@@ -68,14 +73,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
 
     final relationships = relationshipsFor(node, element, _symbolGenerator);
 
-    _registerAsDefinition(
-      element,
-      node,
-      relationships: relationships,
-    );
+    _registerAsDefinition(element, node, relationships: relationships);
   }
 
-  void _visitNormalFormalParameter(NormalFormalParameter node) {
+  void _visitFormalParameter(FormalParameter node) {
     final element = _symbolGenerator.elementFor(node);
     if (element == null) return;
 
@@ -83,8 +84,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // it as a reference to said field, as well as a declaration of a parameter.
     if (node is FieldFormalParameter) {
       final fieldElement = (element as FieldFormalParameterElement).field;
+      if (fieldElement == null) return;
       _registerAsReference(
-        fieldElement!,
+        fieldElement,
         node,
         offset: node.name.offset,
         length: node.name.length,
@@ -115,6 +117,42 @@ class ScipVisitor extends GeneralizingAstVisitor {
     }
   }
 
+  void _visitNamedType(NamedType node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
+  }
+
+  void _visitImportPrefixReference(ImportPrefixReference node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
+  }
+
+  void _visitNamedArgument(NamedArgument node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
+  }
+
   /// Registers the provided [element] as a reference to an existing definition
   ///
   /// [node] refers to the ast node where the reference exists, [element]
@@ -131,22 +169,27 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol != null) {
       final meta = getSymbolMetadata(element, offset, _analysisErrors);
-      occurrences.add(Occurrence(
-        range: _lineInfo.getRange(offset, length),
-        symbol: symbol,
-        diagnostics: meta.diagnostics,
-      ));
+      occurrences.add(
+        Occurrence(
+          range: _lineInfo.getRange(offset, length),
+          symbol: symbol,
+          diagnostics: meta.diagnostics,
+        ),
+      );
 
       if (!element.source!.fullName.startsWith(_projectRoot)) {
         if (!globalExternalSymbols.any(
           (symbolInfo) => symbolInfo.symbol == symbol,
         )) {
           final meta = getSymbolMetadata(element, offset, _analysisErrors);
-          globalExternalSymbols.add(SymbolInformation(
+          globalExternalSymbols.add(
+            SymbolInformation(
               symbol: symbol,
               documentation: meta.documentation,
               signatureDocumentation: meta.signatureDocumentation,
-              kind: symbolKindFor(element)));
+              kind: symbolKindFor(element),
+            ),
+          );
         }
       }
     }
@@ -164,21 +207,29 @@ class ScipVisitor extends GeneralizingAstVisitor {
     final symbol = _symbolGenerator.symbolFor(element);
     if (symbol == null) return null;
 
-    final meta =
-        getSymbolMetadata(element, element.nameOffset, _analysisErrors);
-    symbols.add(SymbolInformation(
-      symbol: symbol,
-      documentation: meta.documentation,
-      relationships: relationships,
-      signatureDocumentation: meta.signatureDocumentation,
-      kind: symbolKindFor(element),
-    ));
+    final meta = getSymbolMetadata(
+      element,
+      element.nameOffset,
+      _analysisErrors,
+    );
+    symbols.add(
+      SymbolInformation(
+        symbol: symbol,
+        documentation: meta.documentation,
+        relationships: relationships,
+        signatureDocumentation: meta.signatureDocumentation,
+        kind: symbolKindFor(element),
+      ),
+    );
 
-    occurrences.add(Occurrence(
-      range: _lineInfo.getRange(element.nameOffset, element.nameLength),
-      symbol: symbol,
-      symbolRoles: SymbolRole.Definition.value,
-      diagnostics: meta.diagnostics,
-    ));
+    occurrences.add(
+      Occurrence(
+        range: _lineInfo.getRange(element.nameOffset, element.nameLength),
+        symbol: symbol,
+        symbolRoles: SymbolRole.Definition.value,
+        diagnostics: meta.diagnostics,
+        enclosingRange: _lineInfo.getRange(node.offset, node.length),
+      ),
+    );
   }
 }

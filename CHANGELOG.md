@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.0
+- Added support for `enclosing_range` on occurrences definitions
+- Upgraded to Dart `3.12.2`
+- Upgraded to analyzer `^14.0.0` (migrated to the new element model)
+  - `unused_element` diagnostics are now reported with `Warning` severity
+  - same-package deprecated member usages are no longer reported as diagnostics
+
 ## 1.6.2
 - Fixed a few minor bugs found in pubspec.yaml indexing (skips publish_to: none pubspecs, and considers "version" optional)
 - Updates version constraints to support running on dart 3 

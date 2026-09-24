@@ -18,10 +18,12 @@ List<Relationship>? relationshipsFor(
 
     return element.allSupertypes
         .where((type) => !type.isDartCoreObject)
-        .map((type) => Relationship(
-              symbol: symbolGenerator.symbolFor(type.element),
-              isImplementation: true,
-            ))
+        .map(
+          (type) => Relationship(
+            symbol: symbolGenerator.symbolFor(type.element),
+            isImplementation: true,
+          ),
+        )
         .toList();
   }
 
@@ -31,7 +33,7 @@ List<Relationship>? relationshipsFor(
       element is FieldElement ||
       element is PropertyAccessorElement) {
     final parentNode = node.thisOrAncestorOfType<ClassDeclaration>();
-    final parentElement = parentNode?.declaredElement;
+    final parentElement = parentNode?.declaredFragment?.element;
 
     // this shouldn't happen, but if the parent element happens to be
     // null, just fail fast
@@ -44,24 +46,27 @@ List<Relationship>? relationshipsFor(
           .where((type) => type.name == element.name);
     } else if (element is FieldElement) {
       referencingElements = parentElement.allSupertypes
-          .expand((type) => type.accessors)
+          .expand((type) => [...type.getters, ...type.setters])
           .map((acc) => acc.variable)
           .where((variable) => variable.name == element.name)
           .toSet(); // remove any duplicates caused from synthetic getters/setters
     }
     if (element is PropertyAccessorElement) {
       referencingElements = parentElement.allSupertypes
-          .expand((type) => type.accessors)
-          .where((acc) => acc.isSetter == element.isSetter)
-          .where((acc) => acc.isGetter == element.isGetter)
+          .expand((type) => [...type.getters, ...type.setters])
+          .where((acc) => (acc is SetterElement) == (element is SetterElement))
+          .where((acc) => (acc is GetterElement) == (element is GetterElement))
           .where((acc) => acc.variable.name == element.variable.name);
     }
 
     return referencingElements
-        .map((type) => Relationship(
+        .map(
+          (type) => Relationship(
             symbol: symbolGenerator.symbolFor(type),
             isImplementation: true,
-            isReference: true))
+            isReference: true,
+          ),
+        )
         .toList();
   }
 

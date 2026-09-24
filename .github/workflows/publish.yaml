@@ -11,6 +11,14 @@ permissions:
   pull-requests: write
 
 jobs:
-  # Generates and uploads sbom, and publishes to pub.dev
   publish:
-    uses: Workiva/gha-dart-oss/.github/workflows/publish.yaml@v0.1.12
+    name: Publish to pub.dev
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.13.4
+      - run: |
+          dart pub get
+          dart pub publish --force

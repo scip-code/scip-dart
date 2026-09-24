@@ -24,7 +24,7 @@ SymbolInformation_Kind symbolKindFor(Element el) {
     return SymbolInformation_Kind.Constructor;
   } else if (el is MethodElement) {
     return SymbolInformation_Kind.Method;
-  } else if (el is FunctionElement) {
+  } else if (el is TopLevelFunctionElement || el is LocalFunctionElement) {
     return SymbolInformation_Kind.Function;
   } else if (el is TopLevelVariableElement) {
     return SymbolInformation_Kind.Variable;
@@ -32,7 +32,7 @@ SymbolInformation_Kind symbolKindFor(Element el) {
     return SymbolInformation_Kind.Namespace;
   } else if (el is TypeParameterElement) {
     return SymbolInformation_Kind.TypeParameter;
-  } else if (el is ParameterElement) {
+  } else if (el is FormalParameterElement) {
     return SymbolInformation_Kind.Parameter;
   } else if (el is PropertyAccessorElement) {
     return SymbolInformation_Kind.Property;

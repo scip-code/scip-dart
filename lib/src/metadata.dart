@@ -1,6 +1,5 @@
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/diagnostic/diagnostic.dart';
-import 'package:analyzer/error/error.dart';
 import 'package:scip_dart/src/gen/scip.pb.dart' as proto;
 
 /// The collection of AnalysisHint codes that should be considered "Unused".
@@ -44,12 +43,9 @@ class SymbolMetadata {
 SymbolMetadata getSymbolMetadata(
   Element element,
   int offset,
-  List<AnalysisError> analysisErrors,
+  List<Diagnostic> analysisErrors,
 ) {
-  final displayString = element.getDisplayString(
-    withNullability: false,
-    multiline: true,
-  );
+  final displayString = element.displayString(multiline: true);
 
   final docComment = element.documentationComment?.replaceAll(
     RegExp(r'^\s*///\s*', multiLine: true),
@@ -58,15 +54,20 @@ SymbolMetadata getSymbolMetadata(
 
   final diagnostics = analysisErrors
       .where((error) => error.offset == offset)
-      .map((error) => proto.Diagnostic(
-              code: error.errorCode.name,
-              message: error.message,
-              severity: error.severity.toProto(),
-              tags: [
-                if (element.hasDeprecated) proto.DiagnosticTag.Deprecated,
-                if (_unusedHintCodes.contains(error.errorCode.uniqueName))
-                  proto.DiagnosticTag.Unnecessary,
-              ]))
+      .map(
+        (error) => proto.Diagnostic(
+          code: error.diagnosticCode.lowerCaseName.toUpperCase(),
+          message: error.message,
+          severity: error.severity.toProto(),
+          tags: [
+            if (element.metadata.hasDeprecated) proto.DiagnosticTag.Deprecated,
+            if (_unusedHintCodes.contains(
+              error.diagnosticCode.lowerCaseName.toUpperCase(),
+            ))
+              proto.DiagnosticTag.Unnecessary,
+          ],
+        ),
+      )
       .toList();
 
   return SymbolMetadata(

@@ -1,10 +1,6 @@
 import 'dart:math' as math;
 
-enum AnimalType {
-  cat,
-  dog,
-  bird,
-}
+enum AnimalType { cat, dog, bird }
 
 typedef SoundMaker = void Function();
 
@@ -72,10 +68,17 @@ void main() {
   print(dog);
   print('The sum of $numbers is $sum');
 
-  print(math.Rectangle(1,2,3,4));
+  print(math.Rectangle(1, 2, 3, 4));
 
-  [1,2].reduce((a, b) => a + b);
+  math.Random? random = math.Random();
+  final points = <math.Point<int>>[];
+  Object value = points;
+  print(value is math.Random);
+  print([random, points]);
+
+  [1, 2].reduce((a, b) => a + b);
 }
 
 void test(String Function(int) p) {}
 void deepTest(String Function(void Function(String test)) p) {}
+math.Point<int> origin(math.Random random) => math.Point(0, 0);

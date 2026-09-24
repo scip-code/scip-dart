@@ -1,7 +1,8 @@
 name: dart_test_diagnostics
 version: 1.0.0
+publish_to: none
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 dependencies:
-  lints: ^2.0.1
+  lints: ^6.0.0

@@ -178,22 +178,57 @@
 //        ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
 //             ^^^^^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`rectangle.dart`/Rectangle#`<constructor>`().
   
+    math.Random? random = math.Random();
+//  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//       ^^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`random.dart`/Random#
+//               ^^^^^^ definition local 8
+//                        ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//                             ^^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`random.dart`/Random#`<constructor>`().
+    final points = <math.Point<int>>[];
+//        ^^^^^^ definition local 9
+//                  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//                       ^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`point.dart`/Point#
+//                             ^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`int.dart`/int#
+    Object value = points;
+//  ^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`object.dart`/Object#
+//         ^^^^^ definition local 10
+//                 ^^^^^^ reference local 9
+    print(value is math.Random);
+//  ^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`print.dart`/print().
+//        ^^^^^ reference local 10
+//                 ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//                      ^^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`random.dart`/Random#
+    print([random, points]);
+//  ^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`print.dart`/print().
+//         ^^^^^^ reference local 8
+//                 ^^^^^^ reference local 9
+  
     [1, 2].reduce((a, b) => a + b);
 //         ^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`iterable.dart`/Iterable#reduce().
-//                 ^ definition local 8
-//                    ^ definition local 9
-//                          ^ reference local 8
-//                              ^ reference local 9
+//                 ^ definition local 11
+//                    ^ definition local 12
+//                          ^ reference local 11
+//                              ^ reference local 12
   }
   
   void test(String Function(int) p) {}
 //     ^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/test().
 //          ^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`string.dart`/String#
 //                          ^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`int.dart`/int#
-//                               ^ definition local 10
+//                               ^ definition local 13
   void deepTest(String Function(void Function(String test)) p) {}
 //     ^^^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/deepTest().
 //              ^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`string.dart`/String#
 //                                            ^^^^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`string.dart`/String#
-//                                                          ^ definition local 11
+//                                                          ^ definition local 14
+  math.Point<int> origin(math.Random random) => math.Point(0, 0);
+//^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//     ^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`point.dart`/Point#
+//           ^^^ reference scip-dart pub dart:core 3.13.0 dart:core/`int.dart`/int#
+//                ^^^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/origin().
+//                       ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//                            ^^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`random.dart`/Random#
+//                                   ^^^^^^ definition local 15
+//                                              ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
+//                                                   ^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/`point.dart`/Point#`<constructor>`().
   

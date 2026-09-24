@@ -56,6 +56,14 @@ class SymbolGenerator {
       final element = node.correspondingParameter;
       if (element?.source == null) return null;
       return element;
+    } else if (node is DeclaredVariablePattern) {
+      return node.declaredFragment?.element;
+    } else if (node is AssignedVariablePattern) {
+      return _backingElementFor(node.element);
+    } else if (node is PatternField) {
+      final element = _backingElementFor(node.element);
+      if (element?.source == null) return null;
+      return element;
     } else if (node is SimpleIdentifier) {
       var element = node.element;
 
@@ -95,18 +103,7 @@ class SymbolGenerator {
         element = assignmentExpr.readElement ?? assignmentExpr.writeElement;
       }
 
-      // When the identifier is a field, the analyzer creates synthetic getters/
-      // setters for it. We need to get the backing field.
-      if (element is PropertyAccessorElement && element.isOriginVariable) {
-        // The values field on enums is synthetic, and has no explicit definition like
-        // other fields do. Skip indexing for this case.
-        final variable = element.variable;
-        if (variable is FieldElement && variable.isOriginEnumValues) {
-          return null;
-        }
-
-        element = variable;
-      }
+      element = _backingElementFor(element);
 
       // element is null if there's nothing really to do for this node. Example: `void`
       // TODO: One weird issue found: named parameters of external symbols were element.source
@@ -122,6 +119,22 @@ class SymbolGenerator {
     );
 
     return null;
+  }
+
+  /// When [element] is a synthetic getter/setter the analyzer created for a
+  /// field, returns the backing field. Otherwise returns [element]
+  Element? _backingElementFor(Element? element) {
+    if (element is PropertyAccessorElement && element.isOriginVariable) {
+      // The values field on enums is synthetic, and has no explicit definition like
+      // other fields do. Skip indexing for this case.
+      final variable = element.variable;
+      if (variable is FieldElement && variable.isOriginEnumValues) {
+        return null;
+      }
+
+      return variable;
+    }
+    return element;
   }
 
   /// For a given `Element` returns the scip symbol form.
@@ -320,6 +333,12 @@ class SymbolGenerator {
   }
 
   String _localSymbolFor(Element ele) {
+    // pattern variables that are joined (logical-or patterns, shared case
+    // scopes) are all the same variable, key them by their outermost join
+    while (ele is PatternVariableElement && ele.join != null) {
+      ele = ele.join!;
+    }
+
     _localElementRegistry.putIfAbsent(
       ele,
       () => 'local ${_localElementIndex++}',

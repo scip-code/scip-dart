@@ -62,6 +62,12 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitImportPrefixReference(node);
     } else if (node is NamedArgument) {
       _visitNamedArgument(node);
+    } else if (node is DeclaredVariablePattern) {
+      _visitDeclaredVariablePattern(node);
+    } else if (node is AssignedVariablePattern) {
+      _visitAssignedVariablePattern(node);
+    } else if (node is PatternField) {
+      _visitPatternField(node);
     }
 
     super.visitNode(node);
@@ -153,6 +159,44 @@ class ScipVisitor extends GeneralizingAstVisitor {
     );
   }
 
+  void _visitDeclaredVariablePattern(DeclaredVariablePattern node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsDefinition(element, node);
+  }
+
+  void _visitAssignedVariablePattern(AssignedVariablePattern node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
+  }
+
+  void _visitPatternField(PatternField node) {
+    // `:foo` shorthand fields have no explicit name token, the getter
+    // reference shares the name of the variable pattern
+    final pattern = node.pattern.unParenthesized;
+    final nameToken =
+        node.name?.name ?? (pattern is VariablePattern ? pattern.name : null);
+    if (nameToken == null) return;
+
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: nameToken.offset,
+      length: nameToken.length,
+    );
+  }
+
   /// Registers the provided [element] as a reference to an existing definition
   ///
   /// [node] refers to the ast node where the reference exists, [element]
@@ -212,15 +256,21 @@ class ScipVisitor extends GeneralizingAstVisitor {
       element.nameOffset,
       _analysisErrors,
     );
-    symbols.add(
-      SymbolInformation(
-        symbol: symbol,
-        documentation: meta.documentation,
-        relationships: relationships,
-        signatureDocumentation: meta.signatureDocumentation,
-        kind: symbolKindFor(element),
-      ),
-    );
+    // variables joined together within a logical-or pattern, or a shared
+    // case scope, share a single symbol. Only register its information once
+    final isJoinedVariable =
+        element is PatternVariableElement && element.join != null;
+    if (!isJoinedVariable || !symbols.any((s) => s.symbol == symbol)) {
+      symbols.add(
+        SymbolInformation(
+          symbol: symbol,
+          documentation: meta.documentation,
+          relationships: relationships,
+          signatureDocumentation: meta.signatureDocumentation,
+          kind: symbolKindFor(element),
+        ),
+      );
+    }
 
     occurrences.add(
       Occurrence(

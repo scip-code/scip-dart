@@ -5,6 +5,6 @@
   environment:
     sdk: '>=3.0.0 <4.0.0'
   dependencies:
-    lints: ^2.0.1
-//  ^^^^^ reference scip-dart pub lints 2.0.1 `pubspec.yaml`/
+    lints: ^6.0.0
+//  ^^^^^ reference scip-dart pub lints 6.1.0 `pubspec.yaml`/
   

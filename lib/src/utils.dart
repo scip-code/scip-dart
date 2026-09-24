@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/source/line_info.dart';
+import 'package:analyzer/source/source.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:collection/collection.dart';
@@ -48,6 +50,33 @@ extension LineInfoExtension on LineInfo {
     }
 
     return res;
+  }
+}
+
+extension ElementExtension on Element {
+  /// The source file this element was declared in
+  Source? get source => firstFragment.libraryFragment?.source;
+
+  /// The offset of this element's name within its declaring file.
+  ///
+  /// For unnamed constructors, this is the offset of the type name
+  int get nameOffset {
+    final fragment = firstFragment;
+    if (fragment.nameOffset != null) return fragment.nameOffset!;
+    if (fragment is ConstructorFragment && fragment.typeNameOffset != null) {
+      return fragment.typeNameOffset!;
+    }
+    return fragment.offset;
+  }
+
+  /// The length of this element's name within its declaring file.
+  ///
+  /// For unnamed constructors, this is the length of the type name
+  int get nameLength {
+    final fragment = firstFragment;
+    if (fragment.nameOffset != null) return fragment.name?.length ?? 0;
+    if (fragment is ConstructorFragment) return fragment.typeName?.length ?? 0;
+    return 0;
   }
 }
 

@@ -3,17 +3,17 @@
   
   class _UnusedClass {}
 //      ^^^^^^^^^^^^ definition local 0
-//      diagnostic Information:
+//      diagnostic Warning:
 //      > The declaration '_UnusedClass' isn't referenced.
   
   void _unusedMethod() {}
 //     ^^^^^^^^^^^^^ definition local 1
-//     diagnostic Information:
+//     diagnostic Warning:
 //     > The declaration '_unusedMethod' isn't referenced.
   
   final _unusedTopLevelVariable = 'asdf';
 //      ^^^^^^^^^^^^^^^^^^^^^^^ definition local 2
-//      diagnostic Information:
+//      diagnostic Warning:
 //      > The declaration '_unusedTopLevelVariable' isn't referenced.
   
   @Deprecated('This method is deprecated')
@@ -49,17 +49,11 @@
   
     deprecatedMethod();
 //  ^^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedMethod().
-//  diagnostic Information:
-//  > 'deprecatedMethod' is deprecated and shouldn't be used. This method is deprecated.
     deprecatedParam(foobar: 2);
 //  ^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().
 //                  ^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/deprecatedParam().(foobar)
-//                  diagnostic Information:
-//                  > 'foobar' is deprecated and shouldn't be used. this param is deprecated.
     someDeprecatedFunc();
 //  ^^^^^^^^^^^^^^^^^^ reference scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/someDeprecatedFunc().
-//  diagnostic Information:
-//  > 'someDeprecatedFunc' is deprecated and shouldn't be used.
   }
   
   @deprecated

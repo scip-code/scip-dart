@@ -1,7 +1,7 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/ast/visitor.dart';
 import 'package:analyzer/dart/element/element.dart';
-import 'package:analyzer/error/error.dart';
+import 'package:analyzer/diagnostic/diagnostic.dart' as analyzer;
 import 'package:analyzer/source/line_info.dart';
 import 'package:package_config/package_config.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
@@ -18,7 +18,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
   final String _relativePath;
   final String _projectRoot;
   final LineInfo _lineInfo;
-  final List<AnalysisError> _analysisErrors;
+  final List<analyzer.Diagnostic> _analysisErrors;
 
   final SymbolGenerator _symbolGenerator;
 
@@ -52,10 +52,16 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // to correctly parse all [Declaration] ast nodes.
     if (node is Declaration) {
       _visitDeclaration(node);
-    } else if (node is NormalFormalParameter) {
-      _visitNormalFormalParameter(node);
+    } else if (node is FormalParameter) {
+      _visitFormalParameter(node);
     } else if (node is SimpleIdentifier) {
       _visitSimpleIdentifier(node);
+    } else if (node is NamedType) {
+      _visitNamedType(node);
+    } else if (node is ImportPrefixReference) {
+      _visitImportPrefixReference(node);
+    } else if (node is NamedArgument) {
+      _visitNamedArgument(node);
     }
 
     super.visitNode(node);
@@ -70,7 +76,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     _registerAsDefinition(element, node, relationships: relationships);
   }
 
-  void _visitNormalFormalParameter(NormalFormalParameter node) {
+  void _visitFormalParameter(FormalParameter node) {
     final element = _symbolGenerator.elementFor(node);
     if (element == null) return;
 
@@ -78,8 +84,9 @@ class ScipVisitor extends GeneralizingAstVisitor {
     // it as a reference to said field, as well as a declaration of a parameter.
     if (node is FieldFormalParameter) {
       final fieldElement = (element as FieldFormalParameterElement).field;
+      if (fieldElement == null) return;
       _registerAsReference(
-        fieldElement!,
+        fieldElement,
         node,
         offset: node.name.offset,
         length: node.name.length,
@@ -108,6 +115,42 @@ class ScipVisitor extends GeneralizingAstVisitor {
         length: node.name.length,
       );
     }
+  }
+
+  void _visitNamedType(NamedType node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
+  }
+
+  void _visitImportPrefixReference(ImportPrefixReference node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
+  }
+
+  void _visitNamedArgument(NamedArgument node) {
+    final element = _symbolGenerator.elementFor(node);
+    if (element == null) return;
+
+    _registerAsReference(
+      element,
+      node,
+      offset: node.name.offset,
+      length: node.name.length,
+    );
   }
 
   /// Registers the provided [element] as a reference to an existing definition

@@ -27,8 +27,8 @@ class SymbolGenerator {
   /// that should be used to generate the symbol
   Element? elementFor(AstNode node) {
     if (node is Declaration) {
-      return node.declaredElement;
-    } else if (node is NormalFormalParameter) {
+      return node.declaredFragment?.element;
+    } else if (node is FormalParameter) {
       // if this parameter is a child of a GenericFunctionType (can be a
       // typedef, or a function as a parameter), we don't want to index it
       // as a definition (nothing is defined, just referenced). Return false
@@ -37,12 +37,27 @@ class SymbolGenerator {
           ?.thisOrAncestorOfType<GenericFunctionType>();
       if (parentParameter != null) return null;
 
-      var element = node.declaredElement;
-      if (element == null) return null;
+      return node.declaredFragment?.element;
+    } else if (node is NamedType) {
+      // `Foo()` constructor invocations reference the (unnamed) constructor,
+      // whereas `Foo.bar()` references the class via `Foo`, and the
+      // constructor via `bar`
+      final parent = node.parent;
+      if (parent is ConstructorName && parent.name == null) {
+        return parent.element;
+      }
 
+      final element = node.element;
+      if (element?.source == null) return null;
+      return element;
+    } else if (node is ImportPrefixReference) {
+      return node.element;
+    } else if (node is NamedArgument) {
+      final element = node.correspondingParameter;
+      if (element?.source == null) return null;
       return element;
     } else if (node is SimpleIdentifier) {
-      var element = node.staticElement;
+      var element = node.element;
 
       // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
       // is the reference to the class itself. Skip this declaration
@@ -50,39 +65,22 @@ class SymbolGenerator {
         return null;
       }
 
-      // if we're nested under a ConstructorName identifier, use the constructor
-      // as the element to annotate instead of the reference to the Class
-      final parentConstructor = node.thisOrAncestorOfType<ConstructorName>();
-      if (parentConstructor != null) {
-        // ConstructorNames can also include an import PrefixIdentifier: `math.Rectangle()`
-        // both 'math' and 'Rectangle' are SimpleIdentifiers. We only want the constructor
-        // element for 'Rectangle' in this case
-        final parentPrefixIdentifier = node
-            .thisOrAncestorOfType<PrefixedIdentifier>();
-        if (parentPrefixIdentifier?.prefix == node) return element;
-
-        // Constructors can be named: `Foo.bar()`, both `Foo` and `bar` are SimpleIdentifiers
-        // When the constructor is named, 'bar' is the constructor reference and `Foo` should
-        // reference the class
-        if (parentConstructor.name == node) {
-          return parentConstructor.staticElement;
-        } else if (parentConstructor.name != null) {
-          return element;
-        }
-
-        // Otherwise, constructor is just `Foo()`, so simply return the
-        // constructor's element
-        return parentConstructor.staticElement;
+      // Named constructors: `Foo.bar()`, `bar` is the SimpleIdentifier
+      // referencing the constructor
+      final parent = node.parent;
+      if (parent is ConstructorName && parent.name == node) {
+        return parent.element;
       }
 
       // Both `.loadLibrary()`, and `.call()` are synthetic functions that
       // have no definition. These should therefore should not be indexed.
-      if (element is FunctionElement && element.isSynthetic) {
-        if ([
-          FunctionElement.LOAD_LIBRARY_NAME,
-          FunctionElement.CALL_METHOD_NAME,
-        ].contains(element.name))
-          return null;
+      if (element is TopLevelFunctionElement && element.isOriginLoadLibrary) {
+        return null;
+      }
+      if (element is MethodElement &&
+          !element.isOriginDeclaration &&
+          element.name == MethodElement.CALL_METHOD_NAME) {
+        return null;
       }
 
       // [element] for assignment fields is null. If the parent node
@@ -99,15 +97,15 @@ class SymbolGenerator {
 
       // When the identifier is a field, the analyzer creates synthetic getters/
       // setters for it. We need to get the backing field.
-      if (element?.isSynthetic == true && element is PropertyAccessorElement) {
+      if (element is PropertyAccessorElement && element.isOriginVariable) {
         // The values field on enums is synthetic, and has no explicit definition like
         // other fields do. Skip indexing for this case.
-        if (element.enclosingElement is EnumElement &&
-            element.name == 'values') {
+        final variable = element.variable;
+        if (variable is FieldElement && variable.isOriginEnumValues) {
           return null;
         }
 
-        element = element.variable;
+        element = variable;
       }
 
       // element is null if there's nothing really to do for this node. Example: `void`
@@ -135,12 +133,11 @@ class SymbolGenerator {
     }
 
     // named parameters can be "goto'd" on the consuming symbol, and are not "local"
-    if (element is ParameterElement && !element.isNamed) {
+    if (element is FormalParameterElement && !element.isNamed) {
       return _localSymbolFor(element);
     }
 
-    // for some reason, LibraryImportElement is considered to be "private"
-    if (element.isPrivate && element is! LibraryImportElement) {
+    if (element.isPrivate) {
       return _localSymbolFor(element);
     }
 
@@ -218,8 +215,7 @@ class SymbolGenerator {
     if (element.source == null) {
       display(
         'WARN: Element has null source: '
-        '${element.runtimeType} (${element}) '
-        '${element.location?.components}',
+        '${element.runtimeType} (${element}) ',
       );
       return null;
     }
@@ -241,25 +237,26 @@ class SymbolGenerator {
 
     final namespace = _escapeNamespacePath(filePath);
 
-    if (element is TypeDefiningElement || // class, mixin, enum, type-alias
+    if (element is InterfaceElement || // class, mixin, enum, extension type
+        element is TypeAliasElement ||
         element is ExtensionElement) {
       return '$namespace/${element.name}#';
     }
 
     if (element is ConstructorElement) {
       final className = element.enclosingElement.name;
-      final constructorName = element.name.isNotEmpty
+      final constructorName = element.name != null && element.name != 'new'
           ? element.name
           : '`<constructor>`';
       return '$namespace/$className#$constructorName().';
     }
 
     if (element is MethodElement) {
-      final className = element.enclosingElement.name;
+      final className = element.enclosingElement?.name;
       return '$namespace/$className#${element.name}().';
     }
 
-    if (element is FunctionElement) {
+    if (element is TopLevelFunctionElement || element is LocalFunctionElement) {
       return '$namespace/${element.name}().';
     }
 
@@ -274,28 +271,29 @@ class SymbolGenerator {
     }
 
     // only generate symbols for named parameters, all others are 'local x'
-    if (element is ParameterElement && element.isNamed) {
+    if (element is FormalParameterElement && element.isNamed) {
       final encEle = element.enclosingElement;
       if (encEle == null) {
         display('Parameter element has null enclosingElement "$element"');
         return null;
       }
 
-      // If element is a GenericFunctionTypeElement, the function is a
-      // `void Function({String param})` type. For this case, [param]
+      // If the enclosing element is a GenericFunctionTypeElement, the function
+      // is a `void Function({String param})` type. For this case, [param]
       // is not indexable, so do not generate a symbol for it
-      if (element is GenericFunctionTypeElement) return null;
+      if (encEle is GenericFunctionTypeElement) return null;
 
       return '${_getDescriptor(encEle)}(${element.name})';
     }
 
     if (element is PropertyAccessorElement) {
-      final parentName = element.enclosingElement.name;
+      final parent = element.enclosingElement;
+      final parentName = parent is LibraryElement ? null : parent.name;
 
       var prefix = '';
-      if (element.isGetter) {
+      if (element is GetterElement) {
         prefix = '<get>';
-      } else if (element.isSetter) {
+      } else if (element is SetterElement) {
         prefix = '<set>';
       }
 
@@ -315,7 +313,7 @@ class SymbolGenerator {
       '\n'
       'Received unknown type (${element.runtimeType})\n'
       '\tname: ${element.name}\n'
-      '\tpath: (${element.library!.source.fullName})'
+      '\tpath: (${element.source?.fullName})'
       '\n',
     );
     return null;
@@ -341,8 +339,9 @@ class SymbolGenerator {
   }
 
   String _pathForSdkElement(Element element) {
-    if (element.enclosingElement?.source?.uri != null) {
-      return element.enclosingElement!.source!.uri.toString();
+    final uri = element.source?.uri;
+    if (uri != null) {
+      return uri.toString();
     } else {
       throw Exception(
         'Unable to find path to dart sdk element: ${element.source!.fullName}',

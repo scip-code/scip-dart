@@ -93,7 +93,7 @@ SymbolInformation _buildSymbol(String depName, PubspecLock lock) {
   final depVersion = lock.packages[depName]?.version.toString();
   if (depVersion == null) {
     throw Exception(
-      'Unable to find ${depName} in pubspec.lock. Have you ran pub get?',
+      'Unable to find $depName in pubspec.lock. Have you ran pub get?',
     );
   }
 
@@ -141,7 +141,7 @@ extension _PubspecLineInfo on LineInfo {
       );
     }
     final sectionStart = pubspecStr.indexOf(section);
-    final depStart = section.indexOf('  ${name}:') + 2;
+    final depStart = section.indexOf('  $name:') + 2;
     final startOffset = sectionStart + depStart;
 
     return getRange(startOffset, name.length);

@@ -19,7 +19,7 @@ class SymbolGenerator {
   /// [_localElementIndex] should be used to generate one.
   ///
   /// Use [_localSymbolFor] to generate new local symbols
-  Map<Element, String> _localElementRegistry = {};
+  final Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(this._packageConfig, this._pubspec);
 
@@ -158,11 +158,13 @@ class SymbolGenerator {
 
   /// Returns a scip package symbol for a provided [Element].
   ///
+  ///```
   /// <package>      ::= <manager> ' ' <package-name> ' ' <version>
   /// <scheme>       ::= any UTF-8, escape spaces with double space.
   /// <manager>      ::= same as above, use the placeholder '.' to indicate an empty value
   /// <package-name> ::= same as above
   /// <version>      ::= same as above
+  /// ```
   String _getPackage(Element element) {
     if (element.source == null) {
       throw Exception('Not really sure what to do here');
@@ -215,7 +217,7 @@ class SymbolGenerator {
     if (element.source == null) {
       display(
         'WARN: Element has null source: '
-        '${element.runtimeType} (${element}) ',
+        '${element.runtimeType} ($element) ',
       );
       return null;
     }

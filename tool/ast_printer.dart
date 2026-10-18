@@ -39,7 +39,7 @@ Future<void> main(List<String> args) async {
 
   resolvedUnits.whereType<ResolvedUnitResult>().forEach((unit) {
     print('');
-    print('${chalk.yellow(unit.path.substring(dirPath.length + 1))}');
+    print(chalk.yellow(unit.path.substring(dirPath.length + 1)));
     unit.unit.visitChildren(AstPrinter());
   });
   print('');

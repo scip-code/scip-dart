@@ -260,7 +260,7 @@ class SymbolGenerator {
 
     if (element is MethodElement) {
       final className = element.enclosingElement?.name;
-      return '$namespace/$className#${element.name}().';
+      return '$namespace/$className#${_escapeIdentifier(element.name!)}().';
     }
 
     if (element is TopLevelFunctionElement || element is LocalFunctionElement) {
@@ -332,6 +332,13 @@ class SymbolGenerator {
       () => 'local ${_localElementIndex++}',
     );
     return _localElementRegistry[ele]!;
+  }
+
+  /// Wraps [name] in backticks if it contains characters not allowed in a
+  /// scip simple-identifier (ex: operator methods like `==` or `[]`)
+  String _escapeIdentifier(String name) {
+    if (RegExp(r'^[\w+\-$]+$').hasMatch(name)) return name;
+    return '`${name.replaceAll('`', '``')}`';
   }
 
   String _escapeNamespacePath(String path) {

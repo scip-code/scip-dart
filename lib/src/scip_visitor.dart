@@ -205,7 +205,7 @@ class ScipVisitor extends GeneralizingAstVisitor {
     List<Relationship>? relationships,
   }) {
     final symbol = _symbolGenerator.symbolFor(element);
-    if (symbol == null) return null;
+    if (symbol == null) return;
 
     final meta = getSymbolMetadata(
       element,

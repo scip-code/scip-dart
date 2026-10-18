@@ -9,15 +9,16 @@ import 'package:pubspec_parse/pubspec_parse.dart';
 /// and parse the results. Since paths are fully qualified, calls to [versionFor]
 /// are deterministic, and constant. Hence the static/global nature of the cache
 class PackageVersionCache {
-  static Map<String, String> _cache = {};
+  static final Map<String, String> _cache = {};
 
   static String versionFor(String path) {
     if (!p.isAbsolute(path)) throw Exception('Received non-absolute path');
 
     if (!_cache.containsKey(path)) {
       final file = File(p.canonicalize(p.join(path, 'pubspec.yaml')));
-      if (!file.existsSync())
+      if (!file.existsSync()) {
         throw Exception('Unable to locate pubspec.yaml for $path');
+      }
 
       final pubspec = Pubspec.parse(file.readAsStringSync());
 

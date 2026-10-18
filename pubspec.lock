@@ -121,6 +121,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.12.0"
+  lints:
+    dependency: "direct dev"
+    description:
+      name: lints
+      sha256: "12f842a479589fea194fe5c5a3095abc7be0c1f2ddfa9a0e76aed1dbd26a87df"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.0"
   logging:
     dependency: transitive
     description:
@@ -233,14 +241,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
-  workiva_analysis_options:
-    dependency: "direct dev"
-    description:
-      name: workiva_analysis_options
-      sha256: "9ed9877ee2208992a91bb0ba1209076a97bd1668013f9453cc1642842203113d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.0"
   yaml:
     dependency: transitive
     description:

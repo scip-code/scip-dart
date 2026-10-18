@@ -61,14 +61,18 @@ class SymbolGenerator {
       var element = node.element;
 
       // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
-      // is the reference to the class itself. Skip this declaration
-      if (node.parent is ConstructorDeclaration) {
-        return null;
+      // is the type name of the constructor. For unnamed constructors
+      // (`Foo() {}`), this is the constructor's definition, which is
+      // registered by the declaration itself. For named constructors
+      // (`Foo.bar() {}`), it is a reference to the enclosing class
+      final parent = node.parent;
+      if (parent is ConstructorDeclaration) {
+        if (parent.name == null) return null;
+        return parent.declaredFragment?.element.enclosingElement;
       }
 
       // Named constructors: `Foo.bar()`, `bar` is the SimpleIdentifier
       // referencing the constructor
-      final parent = node.parent;
       if (parent is ConstructorName && parent.name == node) {
         return parent.element;
       }

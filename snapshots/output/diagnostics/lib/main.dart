@@ -1,5 +1,6 @@
   import 'dart:collection'; // unused import
 // definition scip-dart pub dart_test_diagnostics 1.0.0 lib/`main.dart`/
+//       ^^^^^^^^^^^^^^^^^ reference scip-dart pub dart:collection 3.13.0 dart:collection/
   
   class _UnusedClass {}
 //      ^^^^^^^^^^^^ definition local 0

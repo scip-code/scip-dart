@@ -62,6 +62,10 @@ class ScipVisitor extends GeneralizingAstVisitor {
       _visitImportPrefixReference(node);
     } else if (node is NamedArgument) {
       _visitNamedArgument(node);
+    } else if (node is UriBasedDirective) {
+      _visitUriBasedDirective(node);
+    } else if (node is PartOfDirective) {
+      _visitPartOfDirective(node);
     }
 
     super.visitNode(node);
@@ -151,6 +155,55 @@ class ScipVisitor extends GeneralizingAstVisitor {
       offset: node.name.offset,
       length: node.name.length,
     );
+  }
+
+  void _visitUriBasedDirective(UriBasedDirective node) {
+    final fragment = switch (node) {
+      ImportDirective() => node.libraryImport?.importedLibrary?.firstFragment,
+      ExportDirective() => node.libraryExport?.exportedLibrary?.firstFragment,
+      PartDirective() => node.partInclude?.includedFragment,
+    };
+    if (fragment == null) return;
+
+    _registerAsFileReference(fragment, node.uri);
+  }
+
+  void _visitPartOfDirective(PartOfDirective node) {
+    // `part of some.library;` (without a uri) only names the library, there
+    // is no file path to reference
+    final uri = node.uri;
+    if (uri == null) return;
+
+    final unit = node.thisOrAncestorOfType<CompilationUnit>();
+    final fragment = unit?.declaredFragment?.enclosingFragment;
+    if (fragment == null) return;
+
+    _registerAsFileReference(fragment, uri);
+  }
+
+  /// Registers the [uri] string of a directive as a reference to the file
+  /// symbol of [fragment]
+  ///
+  /// If [fragment] exists outside of the projects source, it will be added to
+  /// the [globalExternalSymbols].
+  void _registerAsFileReference(LibraryFragment fragment, StringLiteral uri) {
+    final symbol = _symbolGenerator.fileSymbolForFragment(fragment);
+
+    occurrences.add(
+      Occurrence(
+        range: _lineInfo.getRange(uri.offset, uri.length),
+        symbol: symbol,
+      ),
+    );
+
+    if (!fragment.source.fullName.startsWith(_projectRoot) &&
+        !globalExternalSymbols.any(
+          (symbolInfo) => symbolInfo.symbol == symbol,
+        )) {
+      globalExternalSymbols.add(
+        SymbolInformation(symbol: symbol, kind: SymbolInformation_Kind.File),
+      );
+    }
   }
 
   /// Registers the provided [element] as a reference to an existing definition

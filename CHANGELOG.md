@@ -1,7 +1,6 @@
 # Changelog
 
-## Unreleased
-
+## 1.8.1
 - Upgrade to protobuf v6
 
 ## 1.8.0

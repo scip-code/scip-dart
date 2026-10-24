@@ -60,3 +60,30 @@ final class Bar {}
 interface class Car {}
 
 sealed class Zar {}
+
+class Point {
+  final int x;
+  final int y;
+  Point(this.x, this.y);
+}
+
+void patternVariables(Object obj, (int, int) pair) {
+  var (a, b) = pair;
+  (b, a) = (a, b);
+
+  final Point(x: px, :y) = Point(1, 2);
+  print('$a $b $px $y');
+
+  switch (obj) {
+    case Point(x: var v, y: 0) || Point(x: 0, y: var v):
+      print(v);
+    case [int first, ...var rest]:
+      print('$first $rest');
+    case {'key': String value}:
+      print(value);
+  }
+
+  for (final (i, j) in [pair]) {
+    print(i + j);
+  }
+}

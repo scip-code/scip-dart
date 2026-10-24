@@ -1,5 +1,6 @@
 import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/source/source.dart';
 import 'package:pubspec_parse/pubspec_parse.dart';
 import 'package:package_config/package_config.dart';
 import 'package:scip_dart/src/package_version_cache.dart';
@@ -19,7 +20,7 @@ class SymbolGenerator {
   /// [_localElementIndex] should be used to generate one.
   ///
   /// Use [_localSymbolFor] to generate new local symbols
-  Map<Element, String> _localElementRegistry = {};
+  final Map<Element, String> _localElementRegistry = {};
 
   SymbolGenerator(this._packageConfig, this._pubspec);
 
@@ -68,14 +69,18 @@ class SymbolGenerator {
       var element = node.element;
 
       // A SimpleIdentifier with a direct parent of a ConstructorDeclaration
-      // is the reference to the class itself. Skip this declaration
-      if (node.parent is ConstructorDeclaration) {
-        return null;
+      // is the type name of the constructor. For unnamed constructors
+      // (`Foo() {}`), this is the constructor's definition, which is
+      // registered by the declaration itself. For named constructors
+      // (`Foo.bar() {}`), it is a reference to the enclosing class
+      final parent = node.parent;
+      if (parent is ConstructorDeclaration) {
+        if (parent.name == null) return null;
+        return parent.declaredFragment?.element.enclosingElement;
       }
 
       // Named constructors: `Foo.bar()`, `bar` is the SimpleIdentifier
       // referencing the constructor
-      final parent = node.parent;
       if (parent is ConstructorName && parent.name == node) {
         return parent.element;
       }
@@ -161,6 +166,17 @@ class SymbolGenerator {
     return ['scip-dart', _getPackage(element), descriptor].join(' ');
   }
 
+  /// Returns the scip file symbol for the provided [fragment]. Used for
+  /// references to other files via directives (import, export, part, part of)
+  String fileSymbolForFragment(LibraryFragment fragment) {
+    final library = fragment.element;
+    return [
+      'scip-dart',
+      _packageFor(fragment.source, library),
+      '${_escapeNamespacePath(_filePathFor(fragment.source, library))}/',
+    ].join(' ');
+  }
+
   String fileSymbolFor(String path) {
     return [
       'scip-dart',
@@ -171,28 +187,33 @@ class SymbolGenerator {
 
   /// Returns a scip package symbol for a provided [Element].
   ///
+  ///```
   /// <package>      ::= <manager> ' ' <package-name> ' ' <version>
   /// <scheme>       ::= any UTF-8, escape spaces with double space.
   /// <manager>      ::= same as above, use the placeholder '.' to indicate an empty value
   /// <package-name> ::= same as above
   /// <version>      ::= same as above
+  /// ```
   String _getPackage(Element element) {
     if (element.source == null) {
       throw Exception('Not really sure what to do here');
     }
 
+    return _packageFor(element.source!, element.library!);
+  }
+
+  /// Returns a scip package for a provided [source], that is
+  /// contained within [library]
+  String _packageFor(Source source, LibraryElement library) {
     // sdk packages are not defined within the [_packageConfig], version
     // and name must be handled custom
-    if (_isInSdk(element)) {
-      final packageName = _pathForSdkElement(element).split('/').first;
-      final packageVersion = element.library!.languageVersion.package
-          .toString();
+    if (library.isInSdk) {
+      final packageName = _pathForSdkSource(source).split('/').first;
+      final packageVersion = library.languageVersion.package.toString();
       return 'pub $packageName $packageVersion';
     }
 
-    final package = _packageConfig.packageOf(
-      Uri.file(element.source!.fullName),
-    );
+    final package = _packageConfig.packageOf(Uri.file(source.fullName));
     if (package == null) {
       // this should only happen if the source references a package that is not defined
       // in the pubspec (as a main or transitive dep)
@@ -228,27 +249,13 @@ class SymbolGenerator {
     if (element.source == null) {
       display(
         'WARN: Element has null source: '
-        '${element.runtimeType} (${element}) ',
+        '${element.runtimeType} ($element) ',
       );
       return null;
     }
-    final sourcePath = element.source!.fullName;
-
-    String filePath;
-    if (_isInSdk(element)) {
-      filePath = _pathForSdkElement(element);
-    } else {
-      final config = _packageConfig.packageOf(Uri.file(sourcePath));
-      if (config == null) {
-        throw Exception(
-          'Could not find package for $sourcePath. Have you run pub get?',
-        );
-      }
-
-      filePath = sourcePath.substring(config.root.toFilePath().length);
-    }
-
-    final namespace = _escapeNamespacePath(filePath);
+    final namespace = _escapeNamespacePath(
+      _filePathFor(element.source!, element.library!),
+    );
 
     if (element is InterfaceElement || // class, mixin, enum, extension type
         element is TypeAliasElement ||
@@ -266,7 +273,7 @@ class SymbolGenerator {
 
     if (element is MethodElement) {
       final className = element.enclosingElement?.name;
-      return '$namespace/$className#${element.name}().';
+      return '$namespace/$className#${_escapeIdentifier(element.name!)}().';
     }
 
     if (element is TopLevelFunctionElement || element is LocalFunctionElement) {
@@ -346,6 +353,13 @@ class SymbolGenerator {
     return _localElementRegistry[ele]!;
   }
 
+  /// Wraps [name] in backticks if it contains characters not allowed in a
+  /// scip simple-identifier (ex: operator methods like `==` or `[]`)
+  String _escapeIdentifier(String name) {
+    if (RegExp(r'^[\w+\-$]+$').hasMatch(name)) return name;
+    return '`${name.replaceAll('`', '``')}`';
+  }
+
   String _escapeNamespacePath(String path) {
     return path
         .split('/')
@@ -353,18 +367,21 @@ class SymbolGenerator {
         .join('/');
   }
 
-  bool _isInSdk(Element element) {
-    return element.library?.isInSdk == true;
-  }
+  /// Returns the path of [source] relative to the root of its package,
+  /// or the sdk uri if [library] is within the dart sdk
+  String _filePathFor(Source source, LibraryElement library) {
+    if (library.isInSdk) return _pathForSdkSource(source);
 
-  String _pathForSdkElement(Element element) {
-    final uri = element.source?.uri;
-    if (uri != null) {
-      return uri.toString();
-    } else {
+    final sourcePath = source.fullName;
+    final config = _packageConfig.packageOf(Uri.file(sourcePath));
+    if (config == null) {
       throw Exception(
-        'Unable to find path to dart sdk element: ${element.source!.fullName}',
+        'Could not find package for $sourcePath. Have you run pub get?',
       );
     }
+
+    return sourcePath.substring(config.root.toFilePath().length);
   }
+
+  String _pathForSdkSource(Source source) => source.uri.toString();
 }

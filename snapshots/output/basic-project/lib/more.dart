@@ -1,5 +1,6 @@
   import 'dart:math' as math;
 // definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/
+//       ^^^^^^^^^^^ reference scip-dart pub dart:math 3.13.0 dart:math/
 //                      ^^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/math.
   
   enum AnimalType { cat, dog, bird }
@@ -72,7 +73,16 @@
       }
     }
   
+    Animal.dog(this.name) : type = AnimalType.dog;
+//  ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
+//         ^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#dog().
+//                  ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#name.
+//                          ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#type.
+//                                 ^^^^^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#
+//                                            ^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/AnimalType#dog.
+  
     factory Animal.cat() => Animal('Timmy', type: AnimalType.cat);
+//          ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#
 //                 ^^^ definition scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#cat().
 //                          ^^^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().
 //                                          ^^^^ reference scip-dart pub dart_test 1.0.0 lib/`more.dart`/Animal#`<constructor>`().(type)

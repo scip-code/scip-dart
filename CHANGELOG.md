@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.8.1
+- Upgrade to protobuf v6
+
+## 1.8.0
+- Fixed named constructors not getting indexed
+- Index directives (import, export, part, part of)
+
 ## 1.7.0
 - Added support for `enclosing_range` on occurrences definitions
 - Upgraded to Dart `3.12.2`

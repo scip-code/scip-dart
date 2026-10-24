@@ -32,6 +32,8 @@ class Animal with SleepMixin {
     }
   }
 
+  Animal.dog(this.name) : type = AnimalType.dog;
+
   factory Animal.cat() => Animal('Timmy', type: AnimalType.cat);
 
   void makeSound() {

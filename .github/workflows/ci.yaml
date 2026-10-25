@@ -33,6 +33,23 @@ jobs:
             dart pub global activate dependency_validator ^4.1.0
             dart pub global run dependency_validator
 
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 2.19.6
+      - run: dart pub get
+
+      - uses: ./.github/actions/setup-scip-cli
+
+      - working-directory: test
+        run: |
+          dart pub get
+          dart ../bin/scip_dart.dart ./
+          scip test ./
+
   snapshots:
     runs-on: ubuntu-latest
     strategy:
